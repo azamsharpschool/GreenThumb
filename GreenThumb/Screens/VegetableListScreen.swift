@@ -13,7 +13,11 @@ struct VegetableListScreen: View {
     
     var body: some View {
         List(vegetables) { vegetable in
-            VegetableCellView(vegetable: vegetable)
+            NavigationLink {
+                VegetableDetailScreen(vegetable: vegetable)
+            } label: {
+                VegetableCellView(vegetable: vegetable)
+            }
         }
         .listStyle(.plain)
         .task {
