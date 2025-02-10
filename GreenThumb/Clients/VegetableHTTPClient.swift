@@ -14,5 +14,4 @@ struct VegetableHTTPClient {
         return try JSONDecoder().decode([Vegetable].self, from: data)
     }
      
-    
 }

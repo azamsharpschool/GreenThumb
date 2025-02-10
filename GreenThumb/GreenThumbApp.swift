@@ -11,7 +11,8 @@ import SwiftUI
 struct GreenThumbApp: App {
     var body: some Scene {
         WindowGroup {
-            VegetableTabBarScreen() 
+            VegetableTabBarScreen()
+                .modelContainer(for: [Vegetable.self, MyGardenVegetable.self, Note.self])
         }
     }
 }
