@@ -13,7 +13,7 @@ class Note {
     var title: String
     var body: String
     var dateCreated: Date
-    @Attribute(.externalStorage) var photo: Date? = nil
+    @Attribute(.externalStorage) var photo: Data? = nil
     
     var myGardenVegetabe: MyGardenVegetable?
     
