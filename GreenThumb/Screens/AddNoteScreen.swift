@@ -25,6 +25,10 @@ struct AddNoteScreen: View {
     
     @State private var isCameraSelected: Bool = false
     
+    private var isFormValid: Bool {
+        !noteTitle.isEmptyOrWhiteSpace && !noteBody.isEmptyOrWhiteSpace
+    }
+    
     private func saveNote() {
         // save a new note
         let note = Note(title: noteTitle, body: noteBody)
@@ -83,6 +87,7 @@ struct AddNoteScreen: View {
             }
             
         }
+        .navigationTitle("\(myGardenVegetable.vegetable.name) Note")
         .task(id: selectedPhotoItem) {
             if let selectedPhotoItem {
                 do {
@@ -113,7 +118,7 @@ struct AddNoteScreen: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Save") {
                     saveNote()
-                }
+                }.disabled(!isFormValid)
             }
         }
     }
@@ -122,5 +127,8 @@ struct AddNoteScreen: View {
 #Preview(traits: .sampleData) {
     
     @Previewable @Query var myGardenVegetables: [MyGardenVegetable]
-    AddNoteScreen(myGardenVegetable: myGardenVegetables[0])
+    
+    NavigationStack {
+        AddNoteScreen(myGardenVegetable: myGardenVegetables[0])
+    }
 }

@@ -15,21 +15,9 @@ struct NoteListScreen: View {
     
     var body: some View {
         List(myGardenVegetable.notes ?? []) { note in
-            HStack {
-                
-                if let photoData = note.photo,
-                   let uiImage = UIImage(data: photoData) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 75, height: 75)
-                        .clipShape(Circle())
-                        .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
-                }
-                
-                Text(note.title)
-            }
+            NoteCellView(note: note, placeHolderImage: myGardenVegetable.vegetable.thumbnailImage)
         }
+        .navigationTitle(myGardenVegetable.vegetable.name)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Add Note") {

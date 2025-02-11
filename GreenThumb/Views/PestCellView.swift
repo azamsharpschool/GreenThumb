@@ -1,20 +1,20 @@
 //
-//  MyGardenCellView.swift
+//  PestCellView.swift
 //  GreenThumb
 //
-//  Created by Mohammad Azam on 2/10/25.
+//  Created by Mohammad Azam on 2/11/25.
 //
 
 import SwiftUI
 
-struct MyGardenCellView: View {
+struct PestCellView: View {
     
-    let myGardenVegetable: MyGardenVegetable
+    let pest: Pest
     
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
             // Vegetable Thumbnail Image
-            AsyncImage(url: myGardenVegetable.vegetable.thumbnailImage) { image in
+            AsyncImage(url: pest.photo) { image in
                 ZStack {
                     // Gradient Background
                     Circle()
@@ -57,31 +57,21 @@ struct MyGardenCellView: View {
                 }
             }
             
+            // Vegetable Details
             VStack(alignment: .leading, spacing: 4) {
-                Text(myGardenVegetable.vegetable.name)
+                Text(pest.name)
                     .font(.headline)
                     .foregroundColor(.primary)
-                HStack {
-                    Image(systemName: myGardenVegetable.plantOption.icon)
-                        .foregroundStyle(.green)
-                    
-                    if let notes = myGardenVegetable.notes {
-                        if !notes.isEmpty {
-                            Image(systemName: "list.clipboard")
-                                .foregroundStyle(.green)
-                        }
-                    }
-                }
+                
+                Text(pest.body)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .lineLimit(2) // Limit to 2 lines for cleaner appearance
             }
-            
-            Spacer()
-            
-            HarvestCountDownView(plantingData: myGardenVegetable.datePlanted, harvestingDays: myGardenVegetable.daysToHarvest)
-            
-        }.padding()
+        }
     }
 }
 
-#Preview {
-    MyGardenCellView(myGardenVegetable: MyGardenVegetable(vegetable: PreviewData.loadVegetables()[0], plantOption: .seed))
+#Preview(traits: .sampleData) {
+    PestCellView(pest: PreviewData.loadPests()[0])
 }

@@ -73,6 +73,11 @@ struct VegetableDetailScreen: View {
                 DetailRow(icon: "exclamationmark.triangle", title: "Bad Companions", value: vegetable.badCompanions)
                 DetailRow(icon: "heart.fill", title: "Health Benefits", value: vegetable.healthBenefits.isEmpty ? "N/A" : vegetable.healthBenefits)
                 
+                if let pests = vegetable.pests {
+                    DetailRow(icon: "ladybug", title: "Pests", value: pests.isEmpty ? "N/A": pests.map { $0.name}.joined(separator: ", "))
+                }
+               
+                
                 Divider()
                 
                 SectionHeader(title: "Growing Tips")
@@ -147,8 +152,8 @@ struct DetailRow: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sampleData) {
     NavigationStack {
         VegetableDetailScreen(vegetable: PreviewData.loadVegetables()[0])
-    }.modelContainer(previewContainer)
+    }
 }
