@@ -10,9 +10,18 @@ import SwiftUI
 struct PestListScreen: View {
     
     let pests: [Pest]
+    @State private var search: String = ""
+    
+    private var filteredPests: [Pest] {
+        if search.isEmptyOrWhiteSpace {
+            return pests
+        } else {
+            return pests.filter { $0.name.localizedCaseInsensitiveContains(search) }
+        }
+    }
     
     var body: some View {
-        List(pests) { pest in
+        List(filteredPests) { pest in
             NavigationLink {
                     PestDetailScreen(pest: pest)
             }   label: {
@@ -20,6 +29,7 @@ struct PestListScreen: View {
             }
             
         }
+        .searchable(text: $search)
         .listStyle(.plain)
         .navigationTitle("Pests")
     }
