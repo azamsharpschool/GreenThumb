@@ -13,9 +13,25 @@ struct NoteListScreen: View {
     let myGardenVegetable: MyGardenVegetable
     @State private var addNotePresented: Bool = false
     
+    @Environment(\.modelContext) private var context
+    
+    private func deleteNote(at indexSet: IndexSet) {
+        
+        guard let notes = myGardenVegetable.notes else { return }
+        
+        for index in indexSet {
+            let note = notes[index]
+            context.delete(note)
+            try? context.save()
+        }
+        
+    }
+    
     var body: some View {
-        List(myGardenVegetable.notes ?? []) { note in
-            NoteCellView(note: note, placeHolderImage: myGardenVegetable.vegetable.thumbnailImage)
+        List {
+            ForEach(myGardenVegetable.notes ?? []) { note in
+                NoteCellView(note: note, placeHolderImage: myGardenVegetable.vegetable.thumbnailImage)
+            }.onDelete(perform: deleteNote)
         }
         .navigationTitle(myGardenVegetable.vegetable.name)
             .toolbar {
@@ -31,7 +47,7 @@ struct NoteListScreen: View {
             }
     }
 }
-
+  
 #Preview(traits: .sampleData) {
     
     @Previewable @Query var myGardenVegetables: [MyGardenVegetable]

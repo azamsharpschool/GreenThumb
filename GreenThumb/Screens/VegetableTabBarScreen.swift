@@ -57,7 +57,6 @@ struct VegetableTabBarScreen: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sampleData) {
     VegetableTabBarScreen()
-        .modelContainer(previewContainer)
 }

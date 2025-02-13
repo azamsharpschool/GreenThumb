@@ -28,7 +28,7 @@ extension PreviewTrait where T == Preview.ViewTraits {
 @MainActor
 let previewContainer: ModelContainer = {
     
-    let container = try! ModelContainer(for: Vegetable.self, MyGardenVegetable.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    let container = try! ModelContainer(for: Vegetable.self, MyGardenVegetable.self, Note.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
     
     let vegetables = PreviewData.loadVegetables().prefix(5)
     
@@ -40,6 +40,7 @@ let previewContainer: ModelContainer = {
         Note(title: "Harvesting Guide", body: "Pick tomatoes when fully red; carrots when tops are about 1 inch wide.")
     ]
     
+    // add vegetables
     for vegetable in vegetables {
         container.mainContext.insert(vegetable)
     }
@@ -48,14 +49,23 @@ let previewContainer: ModelContainer = {
         
         let myGardenVegetable = MyGardenVegetable(vegetable: vegetable, plantOption: .seed)
         
+        for noteId in 1...5 {
+            let note = Note(title: "Note \(noteId)", body: "Note Body \(noteId)")
+            myGardenVegetable.notes?.append(note)
+        }
+        
+        //myGardenVegetable.notes = gardeningNotes
+        
+        /*
         let randomNumber = Int.random(in: 0...1)
         if randomNumber == 1 {
             myGardenVegetable.notes = gardeningNotes
-        }
+        } */
         
         let daysAgo = Int.random(in: 1...50) // planted days ago
         myGardenVegetable.datePlanted = Date().daysAgo(daysAgo)
         container.mainContext.insert(myGardenVegetable)
+        
     }
     
     return container

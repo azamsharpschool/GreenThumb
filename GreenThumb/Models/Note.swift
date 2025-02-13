@@ -15,7 +15,7 @@ class Note {
     var dateCreated: Date
     @Attribute(.externalStorage) var photo: Data? = nil
     
-    var myGardenVegetabe: MyGardenVegetable?
+    var myGardenVegetable: MyGardenVegetable?
     
     init(title: String, body: String, dateCreated: Date = Date()) {
         self.title = title
