@@ -22,6 +22,10 @@ struct NoteListScreen: View {
         for index in indexSet {
             let note = notes[index]
             context.delete(note)
+            // remove the note from myGardenVegetable.notes too
+            guard let noteToRemoveIndex = notes.firstIndex(where: { $0.persistentModelID == note.persistentModelID }) else { return }
+            myGardenVegetable.notes?.remove(at: noteToRemoveIndex)
+            
             try? context.save()
         }
         
